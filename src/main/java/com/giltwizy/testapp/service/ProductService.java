@@ -1,5 +1,6 @@
 package com.giltwizy.testapp.service;
 
+import com.giltwizy.testapp.dto.ProductDto;
 import com.giltwizy.testapp.entity.Product;
 import com.giltwizy.testapp.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,8 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product saveProduct(Product product){
+    public Product saveProduct(ProductDto productDto){
+        Product product = Product.build(0, productDto.getProductName(),productDto.getProductPrice(),productDto.getProductQuantity());
         return productRepository.save(product);
     }
 
