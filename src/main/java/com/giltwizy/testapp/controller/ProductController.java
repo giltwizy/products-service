@@ -2,9 +2,10 @@ package com.giltwizy.testapp.controller;
 
 import com.giltwizy.testapp.dto.ProductDto;
 import com.giltwizy.testapp.entity.Product;
+import com.giltwizy.testapp.exceptions.ProductIdNotFoundException;
+import com.giltwizy.testapp.exceptions.ProductNameNotFoundException;
 import com.giltwizy.testapp.service.ProductService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class ProductController {
     }
 
     @PostMapping("addProducts")
-    public ResponseEntity<List<Product>> addProducts(@RequestBody List<Product> products){
+    public ResponseEntity<List<Product>> addProducts(@RequestBody @Valid List<Product> products){
         return new ResponseEntity<>(productService.saveProducts(products),HttpStatus.CREATED);
     }
 
@@ -37,12 +38,12 @@ public class ProductController {
     }
 
     @GetMapping("productById/{productId}")
-    public ResponseEntity<Product> getProduct(@PathVariable int productId){
+    public ResponseEntity<Product> getProduct(@PathVariable int productId) throws ProductIdNotFoundException {
         return ResponseEntity.ok(productService.getProductById(productId));
     }
 
     @GetMapping("productByName/{productName}")
-    public ResponseEntity<Product> getProductByName(@PathVariable String productName){
+    public ResponseEntity<Product> getProductByName(@PathVariable String productName) throws ProductNameNotFoundException {
         return ResponseEntity.ok(productService.getProductByName(productName));
     }
 

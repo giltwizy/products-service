@@ -2,6 +2,8 @@ package com.giltwizy.testapp.service;
 
 import com.giltwizy.testapp.dto.ProductDto;
 import com.giltwizy.testapp.entity.Product;
+import com.giltwizy.testapp.exceptions.ProductIdNotFoundException;
+import com.giltwizy.testapp.exceptions.ProductNameNotFoundException;
 import com.giltwizy.testapp.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +30,23 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product getProductById(int productId){
-        return productRepository.findById(productId).orElse(null);
+    public Product getProductById(int productId) throws ProductIdNotFoundException {
+        Product product =  productRepository.findById(productId).orElse(null);
+        if(product != null ){
+            return product;
+        }
+        else {
+            throw new ProductIdNotFoundException("Product with id "+productId+" is not found");
+        }
     }
 
-    public Product getProductByName(String productName){
-        return productRepository.findByProductName(productName);
+    public Product getProductByName(String productName) throws ProductNameNotFoundException {
+        Product product = productRepository.findByProductName(productName);
+        if(product != null){
+            return product;
+        }else{
+            throw new ProductNameNotFoundException("Product with name "+productName+" is not found");
+        }
     }
 
     public String deleteProductById(int productId){
