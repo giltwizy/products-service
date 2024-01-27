@@ -4,9 +4,9 @@ package com.giltwizy.testapp;
 import com.giltwizy.testapp.entity.Product;
 import com.giltwizy.testapp.repository.ProductRepository;
 import com.giltwizy.testapp.service.ProductService;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
