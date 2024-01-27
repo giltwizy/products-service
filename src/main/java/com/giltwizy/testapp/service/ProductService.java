@@ -5,6 +5,9 @@ import com.giltwizy.testapp.entity.Product;
 import com.giltwizy.testapp.exceptions.ProductIdNotFoundException;
 import com.giltwizy.testapp.exceptions.ProductNameNotFoundException;
 import com.giltwizy.testapp.repository.ProductRepository;
+
+import io.micrometer.common.lang.NonNull;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,12 +20,11 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product saveProduct(ProductDto productDto){
-        Product product = Product.build(0, productDto.getProductName(),productDto.getProductPrice(),productDto.getProductQuantity());
+    public Product saveProduct(@NonNull Product product){        
         return productRepository.save(product);
     }
 
-    public List<Product> saveProducts(List<Product> products){
+    public List<Product> saveProducts(@NonNull List<Product> products){
         return productRepository.saveAll(products);
     }
 

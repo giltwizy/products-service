@@ -5,13 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
-@AllArgsConstructor(staticName = "build")
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "PRODUCT_TBL")
@@ -19,6 +16,7 @@ public class Product {
     @Id
     @GeneratedValue
     private int productId;
+    @NotBlank(message = "Product Name cannot be empty or null")
     private String productName;
     private double productPrice;
     private int productQuantity;
