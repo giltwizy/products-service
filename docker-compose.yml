@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+  product-service:
+    image: giltwizy/product-service:v1.0.1-alpha
+    ports:
+      - "9000:9000"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 5
+        window: 60s
+
+    environment:
+      - ACTIVE_PROFILE=           # dev or prod
+      - DATABASE_URL=
+      - DATABASE_USERNAME=
+      - DATABASE_PASSWORD=
+      - LOGBACK_MAX_FILE_SIZE=20MB
+      - LOGBACK_MAX_HISTORY=30
+
+    volumes:
+      - ./logs:/app/logs
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "30"
+
+    networks:
+      - bridge-network
+
+networks:
+  bridge-network:
+    external: true
+
